@@ -46,6 +46,7 @@
     <IntDir>..\bin-int\Debug-windows-x86_64\Netsky\</IntDir>
     <TargetName>Netsky</TargetName>
     <TargetExt>.exe</TargetExt>
+    <IncludePath>C:\NETKSY\sprint-math-games-9th-grade-netsky\Netsky\Netsky\src;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -95,8 +96,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\app.cpp" />
+    <ClCompile Include="src\app.hpp" />
     <ClCompile Include="src\button.cpp" />
+    <ClCompile Include="src\gameSelect.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\mainMenu.cpp" />
+    <ClCompile Include="src\mainMenu.hpp" />
+    <ClCompile Include="src\utils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\button.hpp" />
