@@ -1,11 +1,12 @@
 #include <app.hpp>
 
 #include <mainMenu.hpp>
+#include <selectMenu.hpp>
 
 App::App(Vector2 setScreen, std::string setName)
 	: screen(setScreen), name(setName), gameState(MENU)
 {
-	InitWindow(screen.x, screen.y, name.c_str());
+	InitWindow((int)screen.x, (int)screen.y, name.c_str());
 	SetTargetFPS(60);
 	InitAudioDevice();   
 }
@@ -21,6 +22,7 @@ void App::Run()
 			gameState = mainMenu();
 			break;
 		case GAME_SELECT:
+			gameState = selectMenu();
 			break;
 		}
 	}
