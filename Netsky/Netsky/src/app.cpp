@@ -5,7 +5,7 @@
 App::App(Vector2 setScreen, std::string setName)
 	: screen(setScreen), name(setName), gameState(MENU)
 {
-	InitWindow(800, 800, "Main menu");
+	InitWindow(screen.x, screen.y, name.c_str());
 	SetTargetFPS(60);
 	InitAudioDevice();   
 }
