@@ -54,7 +54,7 @@ GameState mainMenu()
         ClearBackground(BLACK);
         DrawTexture(background, 0, 10, WHITE);
         DrawTextEx(fontBm, "NETSKY", (Vector2{570, 150}), (float)fontBm.baseSize, 32, RAYWHITE);
-        DrawTextEx(fontBm, "minigames", {515, 230},  (float)fontBm.baseSize, 32, RAYWHITE);
+        DrawTextEx(fontBm, "minigames", {510, 230},  (float)fontBm.baseSize, 32, RAYWHITE);
         startButton.Draw();
         exitButton.Draw();
         muteButton.Draw();

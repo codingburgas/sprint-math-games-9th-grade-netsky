@@ -9,9 +9,11 @@ GameState selectMenu()
     bool pause = false;
 
     Texture2D background = LoadTexture("graphics/Background.png");
-    Button startButton{ "graphics/Play_button.png", {260, 300}, 0.2f };
-    Button exitButton{ "graphics/Quit_button.png", {260, 400}, 0.2f };
-    Button muteButton{ "graphics/Sound_button.png", {590, 690}, 0.15f };
+    Button game1Button{ "graphics/Game_icon.png", {333, 556}, 0.10f };
+    Button game2Button{ "graphics/Game_icon.png", {433, 556}, 0.10f };
+    Button game3Button{ "graphics/Game_icon.png", {533, 400}, 0.10f };
+    Button muteButton{ "graphics/Sound_button.png", {1300, 690}, 0.15f };
+    Button goBackButton{ "graphics/Go_back.png", {25, 25}, 0.10f };
     bool exit = false;
     Font fontBm = LoadFontEx("fonts/CartoonCheck-Black.ttf", 32, 0, 250);
 
@@ -23,20 +25,31 @@ GameState selectMenu()
         Vector2 mousePosition = GetMousePosition();
         bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
 
-        if (startButton.IsPressed(mousePosition, mousePressed))
+        if (game1Button.IsPressed(mousePosition, mousePressed))
         {
 
         }
 
-        if (exitButton.IsPressed(mousePosition, mousePressed))
+        if (game2Button.IsPressed(mousePosition, mousePressed))
         {
-            exit = true;
+          
+        }
+
+        if (game3Button.IsPressed(mousePosition, mousePressed))
+        {
+
         }
 
         if (muteButton.IsPressed(mousePosition, mousePressed))
         {
             StopMusicStream(music);
             PlayMusicStream(music);
+        }
+
+
+        if (goBackButton.IsPressed(mousePosition, mousePressed))
+        {
+            return MENU;
         }
 
         if (muteButton.IsPressed(mousePosition, mousePressed))
@@ -53,11 +66,13 @@ GameState selectMenu()
         BeginDrawing();
         ClearBackground(BLACK);
         DrawTexture(background, 0, 10, WHITE);
-        DrawTextEx(fontBm, "HELLO NIGGA", (Vector2{ 260, 150 }), (float)fontBm.baseSize, 32, RAYWHITE);
-        DrawTextEx(fontBm, "minigames", { 190, 230 }, (float)fontBm.baseSize, 32, RAYWHITE);
-        startButton.Draw();
-        exitButton.Draw();
+        DrawTextEx(fontBm, "NETSKY", (Vector2{ 570, 150 }), (float)fontBm.baseSize, 32, RAYWHITE);
+        DrawTextEx(fontBm, "CHOOSE A GAME", { 390, 230 }, (float)fontBm.baseSize, 32, RAYWHITE);
+        game1Button.Draw();
+        game2Button.Draw();
+        game3Button.Draw();
         muteButton.Draw();
+        goBackButton.Draw();
         EndDrawing();
 
     }
