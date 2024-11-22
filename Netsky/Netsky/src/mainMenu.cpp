@@ -1,5 +1,6 @@
 #include <mainMenu.hpp>
 
+
 GameState mainMenu()
 {
     Music music = LoadMusicStream("music/theme.mp3");
@@ -14,7 +15,7 @@ GameState mainMenu()
     Font fontBm = LoadFontEx("fonts/CartoonCheck-Black.ttf", 32, 0, 250);
  
 
-    while (WindowShouldClose() == false && exit == false)
+    while (true)
     {
         UpdateMusicStream(music);
 
@@ -23,12 +24,14 @@ GameState mainMenu()
 
         if(startButton.IsPressed(mousePosition, mousePressed))
         {
+ 
             return GAME_SELECT;
+
         }
 
         if(exitButton.IsPressed(mousePosition, mousePressed))
         {
-            exit = true;
+            return NIL;
         }
 
         if(muteButton.IsPressed(mousePosition, mousePressed))
@@ -50,7 +53,7 @@ GameState mainMenu()
 
         BeginDrawing();
         ClearBackground(BLACK);
-        DrawTexture(background, 0, 10, WHITE);
+        DrawTexture(background, 0, -1, WHITE);
         DrawTextEx(fontBm, "NETSKY", (Vector2{570, 150}), (float)fontBm.baseSize, 32, RAYWHITE);
         DrawTextEx(fontBm, "minigames", {510, 230},  (float)fontBm.baseSize, 32, RAYWHITE);
         startButton.Draw();

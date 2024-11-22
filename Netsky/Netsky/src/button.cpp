@@ -1,4 +1,5 @@
 #include "button.hpp"
+#include <iostream>
 
 Button::Button(const char *imagePath, Vector2 imagePosition, float scale)
 {
