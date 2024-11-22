@@ -99,7 +99,7 @@
     <ClCompile Include="src\app.cpp" />
     <ClCompile Include="src\app.hpp" />
     <ClCompile Include="src\button.cpp" />
-    <ClCompile Include="src\hangman.cpp" />
+    <ClCompile Include="src\game2.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mainMenu.cpp" />
     <ClCompile Include="src\mainMenu.hpp" />

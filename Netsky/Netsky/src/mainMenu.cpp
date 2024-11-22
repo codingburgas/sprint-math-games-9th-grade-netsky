@@ -4,8 +4,6 @@ GameState mainMenu()
 {
     Music music = LoadMusicStream("music/theme.mp3");
 
-    PlayMusicStream(music);
-
     bool pause = false;             
 
     Texture2D background = LoadTexture("graphics/Background.png");

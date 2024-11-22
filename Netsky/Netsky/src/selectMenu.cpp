@@ -4,14 +4,13 @@ GameState selectMenu()
 {
     Music music = LoadMusicStream("music/theme.mp3");
 
-    PlayMusicStream(music);
 
     bool pause = false;
 
     Texture2D background = LoadTexture("graphics/Background.png");
-    Button game1Button{ "graphics/Game_icon.png", {333, 556}, 0.10f };
-    Button game2Button{ "graphics/Game_icon.png", {433, 556}, 0.10f };
-    Button game3Button{ "graphics/Game_icon.png", {533, 400}, 0.10f };
+    Button game1Button{ "graphics/MathBattle.png", {300, 500}, 0.5f };
+    Button game2Button{ "graphics/HangMan.png", {600, 500}, 0.5f};
+    Button game3Button{ "graphics/HangMan.png", {900, 500}, 0.5f };
     Button muteButton{ "graphics/Sound_button.png", {1300, 690}, 0.15f };
     Button goBackButton{ "graphics/Go_back.png", {25, 25}, 0.10f };
     bool exit = false;
@@ -27,17 +26,17 @@ GameState selectMenu()
 
         if (game1Button.IsPressed(mousePosition, mousePressed))
         {
-
+            return GAME1;
         }
 
         if (game2Button.IsPressed(mousePosition, mousePressed))
         {
-          
+            return GAME2;
         }
 
         if (game3Button.IsPressed(mousePosition, mousePressed))
         {
-
+            return GAME3;
         }
 
         if (muteButton.IsPressed(mousePosition, mousePressed))
