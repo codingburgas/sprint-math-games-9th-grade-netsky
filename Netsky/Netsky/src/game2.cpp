@@ -101,5 +101,6 @@
 
 GameState game2()
 {
+
 	return NIL;
 }
