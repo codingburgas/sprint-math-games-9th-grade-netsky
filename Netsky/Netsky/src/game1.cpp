@@ -38,7 +38,7 @@ MathProblem GenerateMathProblem() {
 
     problem.isCorrect = rand() % 2 == 0;
     if (!problem.isCorrect) {
-        problem.displayedResult += (rand() % 2 + 1);
+        problem.displayedResult += (rand() % 5 + 1);
     }
 
     return problem;
@@ -56,20 +56,35 @@ GameState game1(int screenWidth, int screenHeight) {
     Texture2D normalStance;
     {
         Image normalStanceImage = LoadImage("graphics/NormalStance.png");
-        ImageResize(&normalStanceImage, 500, 700);
+        ImageResize(&normalStanceImage, 700, 700);
         normalStance = LoadTextureFromImage(normalStanceImage);
     }
 
+    Texture2D thumbsUp;
+    {
+        Image thumbsUpImage = LoadImage("graphics/Thumbs_up.png");
+        ImageResize(&thumbsUpImage, 700, 700);
+        thumbsUp = LoadTextureFromImage(thumbsUpImage);
+    }
 
+    Texture2D thumbsDown;
+    {
+        Image thumbsDownImage = LoadImage("graphics/Thumbs_down.png");
+        ImageResize(&thumbsDownImage, 700, 700);
+        thumbsDown = LoadTextureFromImage(thumbsDownImage);
+    }
+
+    Texture2D currentTexture = normalStance;
 
     MathProblem currentProblem = GenerateMathProblem();
     int score = 0;
-    float timer = 500.0f;
+    float timer = 1.0f;
     bool gameOver = false;
-    Button trueButton{ "graphics/True_button.png", {300, 620}, 0.25f };
-    Button falseButton{ "graphics/False_button.png", {800, 620}, 0.25f };
+    Button trueButton{ "graphics/True_button.png", {300, 660}, 0.6f };
+    Button falseButton{ "graphics/False_button.png", {800, 660}, 0.6f };
     Button restartButton{ "graphics/Play_button.png", {400, 500}, 0.1f };
     Button exitButton{ "graphics/Quit_button.png", {900, 500}, 0.1f };
+    Font fontBoard = LoadFontEx("fonts/chawp.ttf", 32, 0, 250);
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -87,12 +102,20 @@ GameState game1(int screenWidth, int screenHeight) {
             if (trueButton.IsPressed(mousePosition, mousePressed)) {
                 if (currentProblem.isCorrect) {
                     score += 10;
+                    currentTexture = thumbsUp;
+                }
+                else {
+                    currentTexture = thumbsDown;
                 }
                 currentProblem = GenerateMathProblem();
             }
             if (falseButton.IsPressed(mousePosition, mousePressed)) {
                 if (!currentProblem.isCorrect) {
                     score += 10;
+                    currentTexture = thumbsUp;
+                }
+                else {
+                    currentTexture = thumbsDown;
                 }
                 currentProblem = GenerateMathProblem();
             }
@@ -101,32 +124,30 @@ GameState game1(int screenWidth, int screenHeight) {
 
         ClearBackground(RAYWHITE);
         DrawTexture(background, 0, -15, WHITE);
-        DrawTexture(normalStance, 950, -10, WHITE);
+        DrawTexture(currentTexture, 850, 50, WHITE);
 
         if (!gameOver) {
-            DrawText(("Score: " + std::to_string(score)).c_str(), 1290, 10, 30, BLACK);
-            DrawText(("Time: " + std::to_string(timer)).c_str(), 1290, 50, 30, BLACK);
 
-            std::string problemText = std::to_string(currentProblem.num1) + " " +
-                currentProblem.operation + " " +
-                std::to_string(currentProblem.num2) + " = " +
-                std::to_string(currentProblem.displayedResult);
-            DrawText(problemText.c_str(), screenWidth / 2 - MeasureText(problemText.c_str(), 40) / 2, 300, 40, BLACK);
+            DrawText(("Score: " + std::to_string(score)).c_str(), 1200, 10, 30, BLACK);
+            DrawText(("Time: " + std::to_string((int)timer)).c_str(), 1200, 50, 30, BLACK);
+
+            std::string problemText = std::to_string(currentProblem.num1) + " " + currentProblem.operation + " " + std::to_string(currentProblem.num2) + " = " + std::to_string(currentProblem.displayedResult);
+            DrawTextEx(fontBoard, problemText.c_str(), (Vector2{ 375, 250 }), 60, 10, WHITE);
             trueButton.Draw();
             falseButton.Draw();
 
         }
 
         else {
-            DrawText(("Game Over! Your score: " + std::to_string(score)).c_str(), screenWidth / 2 - 250, 300, 40, BLACK);
+            DrawTextEx(fontBoard, ("Game Over! Your score: " + std::to_string(score)).c_str(), Vector2({ 225, 250 }), 50, 0, WHITE);
             restartButton.Draw();
             exitButton.Draw();
-
             if (restartButton.IsPressed(mousePosition, mousePressed)) {
                 score = 0;
-                timer = 30.0f;
+                timer = 50.0f;
                 gameOver = false;
                 currentProblem = GenerateMathProblem();
+
             }
 
             if (exitButton.IsPressed(mousePosition, mousePressed)) {
@@ -136,6 +157,8 @@ GameState game1(int screenWidth, int screenHeight) {
         }
         EndDrawing();
     }
+    UnloadTexture(thumbsDown);
+    UnloadTexture(thumbsUp);
     UnloadTexture(normalStance);
     UnloadTexture(background);
     return NIL;
