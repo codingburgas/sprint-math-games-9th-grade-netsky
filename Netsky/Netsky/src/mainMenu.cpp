@@ -24,13 +24,19 @@ GameState mainMenu()
 
         if(startButton.IsPressed(mousePosition, mousePressed))
         {
- 
+            UnloadFont(fontBm);
+            UnloadMusicStream(music);
+            UnloadTexture(background);
+
             return GAME_SELECT;
 
         }
 
         if(exitButton.IsPressed(mousePosition, mousePressed))
         {
+            UnloadFont(fontBm);
+            UnloadMusicStream(music);
+            UnloadTexture(background);
             return NIL;
         }
 

@@ -28,16 +28,25 @@ GameState selectMenu()
 
         if (game1Button.IsPressed(mousePosition, mousePressed))
         {
+            UnloadFont(fontBm);
+            UnloadMusicStream(music);
+            UnloadTexture(background);
             return GAME1;
         }
 
         if (game2Button.IsPressed(mousePosition, mousePressed))
         {
+            UnloadFont(fontBm);
+            UnloadMusicStream(music);
+            UnloadTexture(background);
             return GAME2;
         }
 
         if (game3Button.IsPressed(mousePosition, mousePressed))
         {
+            UnloadFont(fontBm);
+            UnloadMusicStream(music);
+            UnloadTexture(background);
             return GAME3;
         }
 
@@ -50,7 +59,12 @@ GameState selectMenu()
 
         if (goBackButton.IsPressed(mousePosition, mousePressed))
         {
+            UnloadFont(fontBm);
+            UnloadMusicStream(music);
+            UnloadTexture(background);
+
             return MENU;
+
         }
 
         if (muteButton.IsPressed(mousePosition, mousePressed))

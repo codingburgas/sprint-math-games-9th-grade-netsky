@@ -102,6 +102,7 @@
     <ClCompile Include="src\game2.cpp" />
     <ClCompile Include="src\game1.cpp" />
     <ClCompile Include="src\game1.hpp" />
+    <ClCompile Include="src\game3.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mainMenu.cpp" />
     <ClCompile Include="src\mainMenu.hpp" />
@@ -111,6 +112,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\button.hpp" />
+    <ClInclude Include="src\game2.hpp" />
+    <ClInclude Include="src\game3.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

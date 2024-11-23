@@ -96,3 +96,10 @@
 //    return 0;
 //
 //}
+
+#include <utils.hpp>
+
+GameState game2()
+{
+	return NIL;
+}
