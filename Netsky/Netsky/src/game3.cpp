@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <game3.hpp>
 
 using namespace std;
 
@@ -33,7 +34,8 @@ void GenerateQuestion() {
     }
 }
 
-int main() {
+GameState game3() 
+{
     InitWindow(screenWidth, screenHeight, "Math Battle");
     
     // load textures and fonts
@@ -116,5 +118,5 @@ int main() {
     UnloadTexture(healthBar);
     CloseWindow();
     
-    return 0;
+    return NIL;
 }
