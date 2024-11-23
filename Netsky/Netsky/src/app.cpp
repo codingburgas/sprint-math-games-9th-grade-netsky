@@ -7,7 +7,7 @@
 #include <ctime>
 
 App::App(Vector2 setScreen, std::string setName)
-	: screen(setScreen), name(setName), gameState(GAME1)
+	: screen(setScreen), name(setName), gameState(MENU)
 {
 	InitWindow((int)screen.x, (int)screen.y, name.c_str());
 	SetTargetFPS(60);

@@ -12,7 +12,7 @@ GameState mainMenu()
     Button exitButton{"graphics/Quit_button.png", {600, 400}, 0.2f};
     Button muteButton{"graphics/Sound_button.png", {1300, 690}, 0.15f};
     bool exit = false;
-    Font fontBm = LoadFontEx("fonts/CartoonCheck-Black.ttf", 32, 0, 250);
+    Font fontBm = LoadFontEx("fonts/CartoonCheck-Black.ttf", 64, 0, 500);
  
 
     while (true)
@@ -60,8 +60,8 @@ GameState mainMenu()
         BeginDrawing();
         ClearBackground(BLACK);
         DrawTexture(background, 0, -1, WHITE);
-        DrawTextEx(fontBm, "NETSKY", (Vector2{570, 150}), (float)fontBm.baseSize, 32, RAYWHITE);
-        DrawTextEx(fontBm, "minigames", {510, 230},  (float)fontBm.baseSize, 32, RAYWHITE);
+        DrawTextEx(fontBm, "NETSKY", (Vector2{485, 110}), (float)fontBm.baseSize + 30, 15, RAYWHITE);
+        DrawTextEx(fontBm, "minigames", {400, 230}, (float)fontBm.baseSize + 30, 15, RAYWHITE);
         startButton.Draw();
         exitButton.Draw();
         muteButton.Draw();
