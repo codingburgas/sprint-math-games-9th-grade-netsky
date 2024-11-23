@@ -46,10 +46,12 @@ MathProblem GenerateMathProblem() {
 
 GameState game1(int screenWidth, int screenHeight) {
 
+    Texture2D background = LoadTexture("graphics/backgroundgame1.png");
+
     Texture2D greenBoard;
     {
         Image greenBoardImage = LoadImage("graphics/Green_board.png");
-        ImageResize(&greenBoardImage, 1100, 600);
+        ImageResize(&greenBoardImage, 1200, 600);
         greenBoard = LoadTextureFromImage(greenBoardImage);
     }
 
@@ -78,14 +80,15 @@ GameState game1(int screenWidth, int screenHeight) {
 
     MathProblem currentProblem = GenerateMathProblem();
     int score = 0;
-    float timer = 1.0f;
+    float timer = 30.0f;
     bool gameOver = false;
-    Button trueButton{"graphics/True_button.png", {300, 660}, 0.6f };
-    Button falseButton{"graphics/False_button.png", {800, 660}, 0.6f };
+    Button trueButton{"graphics/True_button.png", {190, 660}, 0.6f };
+    Button falseButton{"graphics/False_button.png", {690, 660}, 0.6f };
     Button restartButton{"graphics/Restart_button.png", {140, 660}, 0.6f };
     Button homeButton{"graphics/Home_button.png", {460, 660}, 0.6f };
     Button quitButton{"graphics/Quit_button2.png", {780, 660}, 0.6f };
     Font fontBoard = LoadFontEx("fonts/chawp.ttf", 32, 0, 250);
+    Font fontCartoon = LoadFontEx("fonts/CartoonCheck-Black.ttf", 64, 0, 500);
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -124,13 +127,14 @@ GameState game1(int screenWidth, int screenHeight) {
         }
 
         ClearBackground(RAYWHITE);
-        DrawTexture(greenBoard, 0, 0, WHITE);
-        DrawTexture(currentTexture, 850, 50, WHITE);
+        DrawTexture(background, 0, 0, WHITE);
+        DrawTexture(greenBoard, -40, 0, WHITE);
+        DrawTexture(currentTexture, 870, 130, WHITE);
 
         if (!gameOver) {
 
-            DrawText(("Score: " + std::to_string(score)).c_str(), 1200, 10, 30, BLACK);
-            DrawText(("Time: " + std::to_string((int)timer)).c_str(), 1200, 50, 30, BLACK);
+            DrawTextEx(fontCartoon, ("Score: " + std::to_string(score)).c_str(), Vector2({ 1200, 30 }), 30, 5, WHITE);
+            DrawTextEx(fontCartoon, ("Time: " + std::to_string((int)timer)).c_str(), Vector2({ 1200, 70 }), 30 , 5, WHITE);
 
             std::string problemText = std::to_string(currentProblem.num1) + " " + currentProblem.operation + " " + std::to_string(currentProblem.num2) + " = " + std::to_string(currentProblem.displayedResult);
             DrawTextEx(fontBoard, problemText.c_str(), (Vector2{ 375, 250 }), 60, 10, WHITE);
@@ -140,7 +144,7 @@ GameState game1(int screenWidth, int screenHeight) {
         }
 
         else {
-            DrawTextEx(fontBoard, ("Game Over! Your score: " + std::to_string(score)).c_str(), Vector2({ 225, 200 }), 50, 0, WHITE);
+            DrawTextEx(fontBoard, ("Game Over! Your score: " + std::to_string(score)).c_str(), Vector2({ 165, 200 }), 50, 5, WHITE);
             restartButton.Draw();
             homeButton.Draw();
             quitButton.Draw();
@@ -156,9 +160,11 @@ GameState game1(int screenWidth, int screenHeight) {
                 timer = 30.0f;
                 gameOver = false;
                 currentProblem = GenerateMathProblem();
-
+                currentTexture = normalStance;
             }
             else if (homeButton.IsPressed(mousePosition, mousePressed)) {
+                UnloadFont(fontBoard);
+                UnloadTexture(background);
                 UnloadTexture(currentTexture);
                 UnloadTexture(thumbsDown);
                 UnloadTexture(thumbsUp);
@@ -167,6 +173,8 @@ GameState game1(int screenWidth, int screenHeight) {
                 return GAME_SELECT;
             }
             if (quitButton.IsPressed(mousePosition, mousePressed)) {
+                UnloadFont(fontBoard);
+                UnloadTexture(background);
                 UnloadTexture(currentTexture);
                 UnloadTexture(thumbsDown);
                 UnloadTexture(thumbsUp);
@@ -184,6 +192,7 @@ GameState game1(int screenWidth, int screenHeight) {
     UnloadTexture(thumbsUp);
     UnloadTexture(normalStance);
     UnloadTexture(greenBoard);
+    UnloadTexture(background);
     return NIL;
 }
 
