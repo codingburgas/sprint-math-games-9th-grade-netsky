@@ -10,7 +10,7 @@
 //
 //    vector<int> foundletters;
 //    int foundcount = 0;
-//
+
 //
 //
 //    const string wordlist[4] = { "centimeter",
