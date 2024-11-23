@@ -1,5 +1,5 @@
 <h1 align="center"><b>Team Netsky</b> </h1>
- <img src = "graphics/Netskylogo.png" alt = "logo">
+ <img src = "\Netsky\Netsky\graphicsNetskylogo.png" alt = "logo">
  <br>
   <h1>💾 Description </h1>
   <p>Welcome to the <b>Netsky team </b>, we are a dedicated team of students who have created a game centered around accurate writing and precise mathematical computations. Our mission is to make learning fun and interactive.Dive in, sharpen your mind, and enjoy the games we've designed to challenge and inspire.
@@ -21,22 +21,23 @@
   <h1>💽 Used technologies</h1>
   <p align="left">
   <p><b>IDE and version control system:</b></p>
-    <a> <img src="graphics/icons/visualStudioIcon.png" alt="visual studio icon" width="60"/> </a> 
-    <a> <img src="graphics/icons/gitHubIcon.png" alt="github icon" width="60"/> </a>
-    <a> <img src="graphics/icons/gitIcon.png" alt="git icon" width="60"/> </a>
+    <a> <img src="/Netsky/Netsky/Netsky/graphics/icons/visualStudioIcon.png" alt="visual studio icon" width="60"/> </a> 
+    <a> <img src="/Netsky/Netsky/Netsky/graphics/icons/gitHubIcon.png" alt="github icon" width="60"/> </a>
+    <a> <img src="/Netsky/Netsky/Netsky/graphics/icons/gitIcon.png" alt="git icon" width="60"/> </a>
     <p><b>Programming languages and third-party libraries:</b></p>
-    <a> <img src="graphics/icons/cppIcon.png" alt="c++ icon" width="60"/> </a>
-    <a> <img src="graphics/icons/rayLibIcon.png" alt="raylib icon" width="60"/> </a>
+    <a> <img src="/Netsky/Netsky/Netsky/graphics/icons/cppIcon.png" alt="c++ icon" width="60"/> </a>
+    <a> <img src="/Netsky/Netsky/Netsky/graphics/icons/rayLibIcon.png" alt="raylib icon" width="60"/> </a>
     <p><b>Tools used for design</b></p>
-    <a> <img src="graphics/icons/photoshop_logo.png" alt="photoshop icon" width="60"/> </a>
+    <a> <img src="/Netsky/Netsky/Netsky/graphics/icons/photoshop_logo.png" alt="photoshop icon" width="60"/> </a>
+    <a> <img src="/Netsky/Netsky/Netsky/graphics/icons/Procreate.png" alt="procreate icon" width="60"/> </a>
     <p><b>Tools used for documantation, communication and presentation:</b></p>
-    <a> <img src="graphics/icons/wordIcon.png" alt="word icon" width="60"/> </a>
-    <a> <img src="graphics/icons/teamsIcon.png" alt="teams icon" width="60"/> </a>
-    <a> <img src="graphics/icons/powerPointIcon.png" alt="powerpoint icon" width="60"/> </a>
+    <a> <img src="/Netsky/Netsky/Netsky/graphics/icons/wordIcon.png" alt="word icon" width="60"/> </a>
+    <a> <img src="/Netsky/Netsky/Netsky/graphics/icons/teamsIcon.png" alt="teams icon" width="60"/> </a>
+    <a> <img src="/Netsky/Netsky/Netsky/graphics/icons/powerPointIcon.png" alt="powerpoint icon" width="60"/> </a>
   </p>
 <h1>📥 Download</h1>
 <p>To download our project,you can clone our repository by pasting this command in your command prompt:</p>
-```sh
+```bash
 git clone https://github.com/codingburgas/sprint-math-games-9th-grade-netsky.git
 ```
    <h1>📋 Documents</h1>
