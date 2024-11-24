@@ -17,8 +17,8 @@ int monsterHealth = 100;
 // Random number generator
 int num1, num2, correctAnswer;
 void GenerateQuestion() {
-    num1 = rand() % 10 + 1;
-    num2 = rand() % 10 + 1;
+    num1 = rand() % 20 + 1;
+    num2 = rand() % 20 + 1;
     int operation = rand() % 3;
 
     if (operation == 0) {
@@ -39,18 +39,23 @@ void GenerateQuestion() {
 GameState game3() {
     InitWindow(screenWidth, screenHeight, "Math Battle");
 
+    Color semiTransparentBlack = { 0, 0, 0, 230 };
+
     // Load textures and fonts
     Texture2D background = LoadTexture("graphics/arena.png");
     Texture2D monster = LoadTexture("graphics/Boss.png");
     Texture2D swordMark = LoadTexture("graphics/sword_mark.png");
     Texture2D clawmark = LoadTexture("graphics/claw_mark.png");
     Texture2D hero = LoadTexture("graphics/Hero.png");
-    Font fontBm = LoadFontEx("fonts/CartoonCheck-Black.ttf", 32, 0, 250);
+    Button restartButton{"graphics/Restart_button.png", {380, 600}, 0.6f };
+    Button homeButton{"graphics/Home_button.png", {635, 600}, 0.6f };
+    Button quitButton{"graphics/Quit_button2.png", {880, 600}, 0.6f };
+    Font fontBm = LoadFontEx("fonts/CartoonCheck-Black.ttf", 72, 0, 250);
     Sound hit_hero_sound = LoadSound("music/hit_human.MP3");
     Sound hit_monster = LoadSound("music/hit_monster.MP3");
     Music BOSS_music = LoadMusicStream("music/BOSS.mp3");
-    bool pause = false;
     Sound mute_sound = LoadSound("music/mute.MP3");
+    Sound end_sound = LoadSound("music/end.MP3");
 
     SetTargetFPS(60);
     srand(time(0));
@@ -67,8 +72,14 @@ GameState game3() {
     float damageTimer1 = 0.0f;
     bool heroHit = false;
 
+    bool pause = false;
+    bool gameOver = false;
+
     while (!WindowShouldClose()) {
         UpdateMusicStream(BOSS_music);
+
+        Vector2 mousePosition = GetMousePosition();
+        bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
 
         // Update damage timer
         if (monsterHit) {
@@ -167,17 +178,116 @@ GameState game3() {
 
         // Health bars
         DrawRectangleRounded({ 80, 5, 440, 40 }, 0.3, 6, BLACK);
-        DrawTextEx(fontBm, "PLAYER HEALTH", { 90, 10 }, (float)fontBm.baseSize, 10, RAYWHITE);
+        DrawTextEx(fontBm, "PLAYER HEALTH", { 90, 10 }, (float)fontBm.baseSize - 40, 10, RAYWHITE);
         DrawRectangle(120, 50, playerHealth * 3.5, 35, GREEN);
 
         DrawRectangleRounded({ 890, 5, 470, 40 }, 0.3, 6, BLACK);
-        DrawTextEx(fontBm, "MONSTER HEALTH", { 900, 10 }, (float)fontBm.baseSize, 10, RAYWHITE);
+        DrawTextEx(fontBm, "MONSTER HEALTH", { 900, 10 }, (float)fontBm.baseSize - 40, 10, RAYWHITE);
         DrawRectangle(940, 50, monsterHealth * 3.5, 35, RED);
 
-        DrawRectangle(100, 500, 400, 130, BLACK);
-        DrawTextEx(fontBm, TextFormat("%d %c %d =", num1, operationSymbol, num2), { 220, 520 }, (float)fontBm.baseSize, 10, WHITE);
-        DrawTextEx(fontBm, "Your answer:", { 170, 550 }, (float)fontBm.baseSize, 1, WHITE);
-        DrawTextEx(fontBm, answer, { 265, 580 }, (float)fontBm.baseSize, 10, WHITE);
+        DrawRectangle(100, 500, 400, 130, semiTransparentBlack);
+        DrawTextEx(fontBm, TextFormat("%d %c %d =", num1, operationSymbol, num2), { 220, 520 }, (float)fontBm.baseSize - 40, 10, WHITE);
+        DrawTextEx(fontBm, "Your answer:", { 170, 550 }, (float)fontBm.baseSize - 40, 1, WHITE);
+        DrawTextEx(fontBm, answer, { 265, 580 }, (float)fontBm.baseSize - 40, 10, WHITE);
+
+        if (monsterHealth <= 0)
+        {
+            DrawRectangleRounded({ 270, 200, 900, 500 }, 0.3, 6, BLACK);
+            DrawTextEx(fontBm, "YOU WIN", { 530, 300 }, (float)fontBm.baseSize, 10, RAYWHITE);
+            DrawTextEx(fontBm, "CONGRATULATIONS, CHAMPION!", { 360, 360 }, (float)fontBm.baseSize - 45, 10, RAYWHITE);
+            restartButton.Draw();
+            homeButton.Draw();
+            quitButton.Draw();
+            if (restartButton.IsPressed(mousePosition, mousePressed)) {
+
+                PlaySound(end_sound);
+
+
+                playerHealth = 100;
+                monsterHealth = 100;
+                answerIndex = 0;
+                answer[0] = '\0';
+
+                GenerateQuestion();
+
+                gameOver = false;
+            }
+            else if (homeButton.IsPressed(mousePosition, mousePressed)) {
+                UnloadFont(fontBm);
+                UnloadTexture(background);
+                UnloadTexture(monster);
+                UnloadTexture(swordMark);
+                UnloadTexture(clawmark);
+                UnloadTexture(hero);
+                UnloadSound(hit_hero_sound);
+                UnloadSound(hit_monster);
+                UnloadSound(end_sound);
+                return MENU;
+
+            }
+            if (quitButton.IsPressed(mousePosition, mousePressed)) {
+                UnloadFont(fontBm);
+                UnloadTexture(background);
+                UnloadTexture(monster);
+                UnloadTexture(swordMark);
+                UnloadTexture(clawmark);
+                UnloadTexture(hero);
+                UnloadSound(hit_hero_sound);
+                UnloadSound(hit_monster);
+                UnloadSound(end_sound);
+                CloseWindow();
+                return NIL;
+            }
+        }
+        if (playerHealth <= 0)
+        {
+            DrawRectangleRounded({ 270, 200, 900, 500 }, 0.3, 6, BLACK);
+            DrawTextEx(fontBm, "GAME OVER", { 470, 300 }, (float)fontBm.baseSize, 10, RAYWHITE);
+            DrawTextEx(fontBm, "BETTER LUCK NEXT", { 300, 360 }, (float)fontBm.baseSize - 10, 10, RAYWHITE);
+            DrawTextEx(fontBm, "TIME", { 645, 420 }, (float)fontBm.baseSize - 10, 10, RAYWHITE);
+            restartButton.Draw();
+            homeButton.Draw();
+            quitButton.Draw();
+            if (restartButton.IsPressed(mousePosition, mousePressed)) {
+
+                PlaySound(end_sound);
+
+                
+                playerHealth = 100;
+                monsterHealth = 100;
+                answerIndex = 0;
+                answer[0] = '\0';
+
+                GenerateQuestion(); 
+
+                gameOver = false;  
+            }
+            else if (homeButton.IsPressed(mousePosition, mousePressed)) {
+                UnloadFont(fontBm);
+                UnloadTexture(background);
+                UnloadTexture(monster);
+                UnloadTexture(swordMark);
+                UnloadTexture(clawmark);
+                UnloadTexture(hero);
+                UnloadSound(hit_hero_sound);
+                UnloadSound(hit_monster);
+                UnloadSound(end_sound);
+                return MENU;
+            }
+            if (quitButton.IsPressed(mousePosition, mousePressed)) {
+                UnloadFont(fontBm);
+                UnloadTexture(background);
+                UnloadTexture(monster);
+                UnloadTexture(swordMark);
+                UnloadTexture(clawmark);
+                UnloadTexture(hero);
+                UnloadSound(hit_hero_sound);
+                UnloadSound(hit_monster);
+                UnloadSound(end_sound);
+                CloseWindow();
+                return NIL;
+            }
+        }
 
         EndDrawing();
     }
