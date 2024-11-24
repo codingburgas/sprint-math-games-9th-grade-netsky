@@ -61,19 +61,13 @@ GameState game2()
     Texture2D hangman1 = LoadTexture("graphics/Hangman1.png");
     Texture2D background = LoadTexture("graphics/squaredpapersheet.png");
     Font fontBt = LoadFontEx("fonts/Kalam-Bold.ttf", 75, 0, 250);
-<<<<<<< HEAD
     Button restartButton{ "graphics/Restart_button.png", {100, 660}, 0.4f };
     Button homeButton{ "graphics/Home_button.png", {300, 660}, 0.4f };
     Button quitButton{ "graphics/Quit_button2.png", {500, 660}, 0.4f };
-=======
-    Button restartButton{ "graphics/Restart_button.png", {140, 660}, 0.6f };
-    Button homeButton{ "graphics/Home_button.png", {460, 660}, 0.6f };
-    Button quitButton{ "graphics/Quit_button2.png", {780, 660}, 0.6f };
     Sound correct_sound = LoadSound("music/start.MP3");
     Sound incorrect_sound = LoadSound("music/go_back.MP3");
     Sound end_sound = LoadSound("music/end.MP3");
 
->>>>>>> 7610120f355d1d6cea3493b74fe7b1949ea06d15
    
 
 
