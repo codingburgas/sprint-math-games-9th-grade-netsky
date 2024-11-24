@@ -80,7 +80,7 @@ GameState game1(int screenWidth, int screenHeight) {
 
     MathProblem currentProblem = GenerateMathProblem();
     int score = 0;
-    float timer = 30.0f;
+    float timer = 20.0f;
     bool gameOver = false;
     Button trueButton{"graphics/True_button.png", {190, 660}, 0.6f };
     Button falseButton{"graphics/False_button.png", {690, 660}, 0.6f };
@@ -115,6 +115,7 @@ GameState game1(int screenWidth, int screenHeight) {
                     PlaySound(write_sound);
                 }
                 else {
+                    score -= 10;
                     currentTexture = thumbsDown;
                     PlaySound(no_sound);
                 }
@@ -127,6 +128,7 @@ GameState game1(int screenWidth, int screenHeight) {
                     PlaySound(write_sound);
                 }
                 else {
+                    score -= 10;
                     currentTexture = thumbsDown;
                     PlaySound(no_sound);
                 }
@@ -170,7 +172,7 @@ GameState game1(int screenWidth, int screenHeight) {
 
                 PlaySound(end_sound);
                 score = 0;
-                timer = 30.0f;
+                timer = 20.0f;
                 gameOver = false;
                 currentProblem = GenerateMathProblem();
                 currentTexture = normalStance;

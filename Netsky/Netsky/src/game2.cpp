@@ -35,8 +35,8 @@ GameState game2()
        "ordinal", "divisor", "percent" , "algebra" }; // initialize the words we might get
     std::string chosenWord = wordList[rand() % 5]; // choosing a word from the wordlist 
     char underscores[MAX_ITEMSSSIZE];
-    std::string name;
-    
+    char name[MAX_ITEMSSSIZE] = { '\0' };
+
     for (int i = 0; i < chosenWord.length(); i++)// find how many underscores we have to draw
     {
         underscores[i] = '_';
@@ -108,7 +108,7 @@ GameState game2()
         }
         // check if the word has the letter the user entered
         if (IsKeyPressed(KEY_ENTER)) {
-            char letterToCheck = name[unsigned int(letterCount - 1)];
+            char letterToCheck = name[letterCount - 1];
             bool foundLetter = false;
 
             for (int i = 0; i < chosenWord.size(); i++) {
@@ -147,7 +147,7 @@ GameState game2()
         DrawTextEx(fontBt, underscores, { 180, 70 + 105 }, (float)fontBt.baseSize, 60, BLACK);
 
         // draw user's input
-        DrawTextEx(fontBt, name.c_str(), {100, 400}, (float)fontBt.baseSize + 30, 40, DARKBLUE);
+        DrawTextEx(fontBt, name, {100, 400}, (float)fontBt.baseSize + 30, 40, DARKBLUE);
 
         // draw the hangman when you have 5 lives
         if (lives == 5)
