@@ -35,7 +35,7 @@ GameState game2()
        "ordinal", "divisor", "percent" , "algebra" }; // initialize the words we might get
     std::string chosenWord = wordList[rand() % 5]; // choosing a word from the wordlist 
     char underscores[MAX_ITEMSSSIZE];
-    char name[MAX_ITEMSSSIZE] = { '\0' };
+    std::string name;
     
     for (int i = 0; i < chosenWord.length(); i++)// find how many underscores we have to draw
     {
@@ -43,9 +43,9 @@ GameState game2()
     }
     underscores[chosenWord.length()] = '\0';  // Null-terminate the string
 
-  
+    
     int letterCount = 0;
-    int maxInput = chosenWord.size();
+    int maxInput = int(chosenWord.size());
     int lives = 5;
     bool found = false;
     int foundcount = 0;
@@ -60,7 +60,6 @@ GameState game2()
     Texture2D hangman1 = LoadTexture("graphics/Hangman1.png");
     Texture2D background = LoadTexture("graphics/squaredpapersheet.png");
     Font fontBt = LoadFontEx("fonts/Kalam-Bold.ttf", 75, 0, 250);
-    Button restartButton{ "graphics/Restart_button.png", {100, 660}, 0.4f };
     Button homeButton{ "graphics/Home_button.png", {300, 660}, 0.4f };
     Button quitButton{ "graphics/Quit_button2.png", {500, 660}, 0.4f };
     Sound correct_sound = LoadSound("music/start.MP3");
@@ -109,7 +108,7 @@ GameState game2()
         }
         // check if the word has the letter the user entered
         if (IsKeyPressed(KEY_ENTER)) {
-            char letterToCheck = name[letterCount - 1];
+            char letterToCheck = name[unsigned int(letterCount - 1)];
             bool foundLetter = false;
 
             for (int i = 0; i < chosenWord.size(); i++) {
@@ -148,7 +147,7 @@ GameState game2()
         DrawTextEx(fontBt, underscores, { 180, 70 + 105 }, (float)fontBt.baseSize, 60, BLACK);
 
         // draw user's input
-        DrawTextEx(fontBt, name, { 100, 400 }, (float)fontBt.baseSize + 30, 40, DARKBLUE);
+        DrawTextEx(fontBt, name.c_str(), {100, 400}, (float)fontBt.baseSize + 30, 40, DARKBLUE);
 
         // draw the hangman when you have 5 lives
         if (lives == 5)
@@ -212,7 +211,6 @@ GameState game2()
 
         }
         //draw restert, home and quit buttons
-        restartButton.Draw();
         homeButton.Draw();
         quitButton.Draw();
         if (homeButton.IsPressed(mousePosition, mousePressed)) {
@@ -242,20 +240,6 @@ GameState game2()
             UnloadTexture(background);
             UnloadFont(fontBt);
             return NIL;
-        }
-        if (restartButton.IsPressed(mousePosition, mousePressed)) {
-            UnloadSound(correct_sound);
-            UnloadSound(end_sound);
-            UnloadSound(incorrect_sound);
-            UnloadTexture(hangman0);
-            UnloadTexture(hangman5);
-            UnloadTexture(hangman4);
-            UnloadTexture(hangman3);
-            UnloadTexture(hangman2);
-            UnloadTexture(hangman1);
-            UnloadTexture(background);
-            UnloadFont(fontBt);
-            return GAME2;
         }
 
 
@@ -290,7 +274,5 @@ GameState game2()
 
   }
  
-
-
 
 

@@ -55,7 +55,7 @@ GameState game3() {
     Sound end_sound = LoadSound("music/end.MP3");
 
     SetTargetFPS(60);
-    srand(time(0));
+    srand(unsigned int(time(0)));
 
     GenerateQuestion(); // Initial task
 
@@ -174,13 +174,13 @@ GameState game3() {
         }
 
         // Health bars
-        DrawRectangleRounded({ 80, 5, 440, 40 }, 0.3, 6, BLACK);
+        DrawRectangleRounded({ 80, 5, 440, 40 }, 0.3f, 6, BLACK);
         DrawTextEx(fontBm, "PLAYER HEALTH", { 90, 10 }, (float)fontBm.baseSize - 40, 10, RAYWHITE);
-        DrawRectangle(120, 50, playerHealth * 3.5, 35, GREEN);
+        DrawRectangle(120, 50, int(playerHealth * 3.5), 35, GREEN);
 
-        DrawRectangleRounded({ 890, 5, 470, 40 }, 0.3, 6, BLACK);
+        DrawRectangleRounded({ 890, 5, 470, 40 }, 0.3f, 6, BLACK);
         DrawTextEx(fontBm, "MONSTER HEALTH", { 900, 10 }, (float)fontBm.baseSize - 40, 10, RAYWHITE);
-        DrawRectangle(940, 50, monsterHealth * 3.5, 35, RED);
+        DrawRectangle(940, 50, int(monsterHealth * 3.5), 35, RED);
 
         DrawRectangle(100, 500, 400, 130, semiTransparentBlack);
         DrawTextEx(fontBm, TextFormat("%d %c %d =", num1, operationSymbol, num2), { 220, 520 }, (float)fontBm.baseSize - 40, 10, WHITE);
@@ -189,7 +189,7 @@ GameState game3() {
 
         if (monsterHealth <= 0)
         {
-            DrawRectangleRounded({ 270, 200, 900, 500 }, 0.3, 6, BLACK);
+            DrawRectangleRounded({ 270, 200, 900, 500 }, 0.3f, 6, BLACK);
             DrawTextEx(fontBm, "YOU WIN", { 530, 300 }, (float)fontBm.baseSize, 10, RAYWHITE);
             DrawTextEx(fontBm, "CONGRATULATIONS, CHAMPION!", { 360, 360 }, (float)fontBm.baseSize - 45, 10, RAYWHITE);
             restartButton.Draw();
@@ -238,7 +238,7 @@ GameState game3() {
         }
         if (playerHealth <= 0)
         {
-            DrawRectangleRounded({ 270, 200, 900, 500 }, 0.3, 6, BLACK);
+            DrawRectangleRounded({ 270, 200, 900, 500 }, 0.3f, 6, BLACK);
             DrawTextEx(fontBm, "GAME OVER", { 470, 300 }, (float)fontBm.baseSize, 10, RAYWHITE);
             DrawTextEx(fontBm, "BETTER LUCK NEXT", { 300, 360 }, (float)fontBm.baseSize - 10, 10, RAYWHITE);
             DrawTextEx(fontBm, "TIME", { 645, 420 }, (float)fontBm.baseSize - 10, 10, RAYWHITE);
@@ -269,7 +269,7 @@ GameState game3() {
                 UnloadSound(hit_hero_sound);
                 UnloadSound(hit_monster);
                 UnloadSound(end_sound);
-                return MENU;
+                return GAME_SELECT;
             }
             if (quitButton.IsPressed(mousePosition, mousePressed)) {
                 UnloadFont(fontBm);
