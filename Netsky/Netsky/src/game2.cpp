@@ -29,7 +29,6 @@ GameState game2()
     const int screenWidth = 1440;
     const int screenHeight = 800;
 
-    InitWindow(screenWidth, screenHeight, "raylib [text] example - input box");
 
     //--------------------------------------------------------------------------------------
     std::string wordList[] = { "product",
@@ -284,7 +283,6 @@ GameState game2()
     
 
 
-    CloseWindow();
 
 
 

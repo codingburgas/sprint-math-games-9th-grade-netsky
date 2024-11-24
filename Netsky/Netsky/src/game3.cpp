@@ -35,7 +35,6 @@ void GenerateQuestion() {
 }
 
 GameState game3() {
-    InitWindow(screenWidth, screenHeight, "Math Battle");
 
     Color semiTransparentBlack = { 0, 0, 0, 230 };
 
@@ -298,7 +297,6 @@ GameState game3() {
     UnloadTexture(monster);
     UnloadTexture(swordMark); // unload sword mark texture
     UnloadTexture(hero);
-    CloseWindow();
 
     return NIL;
 }
