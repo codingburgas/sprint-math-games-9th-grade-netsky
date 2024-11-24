@@ -1,8 +1,6 @@
-#include <raylib.h>
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <string>
 #include <game3.hpp>
 
 using namespace std;
