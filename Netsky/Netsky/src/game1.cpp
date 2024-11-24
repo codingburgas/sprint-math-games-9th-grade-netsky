@@ -1,5 +1,5 @@
-#include <game1.hpp>
 #include <cstdlib>
+#include <game1.hpp>
 #include <iostream>
 
 
