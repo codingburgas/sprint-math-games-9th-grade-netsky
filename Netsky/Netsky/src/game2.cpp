@@ -61,9 +61,19 @@ GameState game2()
     Texture2D hangman1 = LoadTexture("graphics/Hangman1.png");
     Texture2D background = LoadTexture("graphics/squaredpapersheet.png");
     Font fontBt = LoadFontEx("fonts/Kalam-Bold.ttf", 75, 0, 250);
+<<<<<<< HEAD
     Button restartButton{ "graphics/Restart_button.png", {100, 660}, 0.4f };
     Button homeButton{ "graphics/Home_button.png", {300, 660}, 0.4f };
     Button quitButton{ "graphics/Quit_button2.png", {500, 660}, 0.4f };
+=======
+    Button restartButton{ "graphics/Restart_button.png", {140, 660}, 0.6f };
+    Button homeButton{ "graphics/Home_button.png", {460, 660}, 0.6f };
+    Button quitButton{ "graphics/Quit_button2.png", {780, 660}, 0.6f };
+    Sound correct_sound = LoadSound("music/start.MP3");
+    Sound incorrect_sound = LoadSound("music/go_back.MP3");
+    Sound end_sound = LoadSound("music/end.MP3");
+
+>>>>>>> 7610120f355d1d6cea3493b74fe7b1949ea06d15
    
 
 
@@ -116,12 +126,14 @@ GameState game2()
                     //the letter has been found and replaced
                     foundcount++;
                     found = true;
+                    PlaySound(correct_sound);
                 }
 
 
             }
             if (!foundLetter) {
                 lives--;  // Decrease lives if the letter isnt in the word
+                PlaySound(incorrect_sound);
             }
 
         }
@@ -202,6 +214,7 @@ GameState game2()
             DrawTextEx(fontBt, "Lives left: 0/5", { 1200, 80 }, (float)fontBt.baseSize - 24, 1, RED);
             DrawTextEx(fontBt, "GAME OVER", { 70, 500 }, (float)fontBt.baseSize, 60, RED);
             DrawTexture(hangman0, screenWidth / 2 - hangman0.width / 2, screenHeight / 2 - hangman0.height / 2, WHITE);
+            PlaySound(end_sound);
 
 
         }
@@ -210,6 +223,9 @@ GameState game2()
         homeButton.Draw();
         quitButton.Draw();
         if (homeButton.IsPressed(mousePosition, mousePressed)) {
+            UnloadSound(correct_sound);
+            UnloadSound(end_sound);
+            UnloadSound(incorrect_sound);
             UnloadTexture(hangman0);
             UnloadTexture(hangman5) ;
             UnloadTexture(hangman4) ;
@@ -221,6 +237,9 @@ GameState game2()
             return GAME_SELECT;
         }
         if (quitButton.IsPressed(mousePosition, mousePressed)) {
+            UnloadSound(correct_sound);
+            UnloadSound(end_sound);
+            UnloadSound(incorrect_sound);
             UnloadTexture(hangman0);
             UnloadTexture(hangman5);
             UnloadTexture(hangman4);
@@ -232,6 +251,9 @@ GameState game2()
             return NIL;
         }
         if (restartButton.IsPressed(mousePosition, mousePressed)) {
+            UnloadSound(correct_sound);
+            UnloadSound(end_sound);
+            UnloadSound(incorrect_sound);
             UnloadTexture(hangman0);
             UnloadTexture(hangman5);
             UnloadTexture(hangman4);
@@ -253,7 +275,11 @@ GameState game2()
 
     }
     // unload textures and fonts
-    UnloadTexture(background);  UnloadTexture(hangman0);
+    UnloadSound(correct_sound);
+    UnloadSound(end_sound);
+    UnloadSound(incorrect_sound);
+    UnloadTexture(background);
+    UnloadTexture(hangman0);
     UnloadTexture(hangman5);
     UnloadTexture(hangman4);
     UnloadTexture(hangman3);

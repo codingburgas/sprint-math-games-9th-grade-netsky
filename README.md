@@ -16,7 +16,7 @@
 
 -[Ivayla Keserdzhieva](https://github.com/IRKeserdzhieva23)- Designer <br>
 
--[Velizar Vulkov](https://github.com/VTVulkov23) - Designer <br>
+-[Velizar Vulkov](https://github.com/VTVulkov23) - Co-Designer <br>
   </p>
 
   <h1>💽 Used Technologies</h1>
@@ -45,5 +45,5 @@ git clone https://github.com/codingburgas/sprint-math-games-9th-grade-netsky.git
    <h1>📋 Documents</h1>
   <p>
  -<a href ="" >📜 Documentation</h2><br>
- -<a href ="" >📄Presentation</h2>
+ -<a href ="https://codingburgas-my.sharepoint.com/:p:/g/personal/padimitrov23_codingburgas_bg/EZzHOOlYcQBKsLcxv29Hj48BhYeU1_gukOtrkq0I9GNjMw?e=zUW8tl" >📄Presentation</h2>
 </p>

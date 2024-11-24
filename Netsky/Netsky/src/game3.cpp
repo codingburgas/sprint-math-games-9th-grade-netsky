@@ -10,23 +10,25 @@ using namespace std;
 constexpr int screenWidth = 1440;
 constexpr int screenHeight = 800;
 
-// player and monster health
+// Player and monster health
 int playerHealth = 100;
 int monsterHealth = 100;
 
-// random number generator
+// Random number generator
 int num1, num2, correctAnswer;
 void GenerateQuestion() {
     num1 = rand() % 10 + 1;
     num2 = rand() % 10 + 1;
-    int operation = rand() % 3;  // randomly choose operation
+    int operation = rand() % 3;
 
-    if (operation == 0) { // addition
+    if (operation == 0) {
         correctAnswer = num1 + num2;
-    } else if (operation == 1) { // multiplication
+    }
+    else if (operation == 1) {
         correctAnswer = num1 * num2;
-    } else { // Division
-        while (num1 % num2 != 0) { // ensure clean division
+    }
+    else {
+        while (num1 % num2 != 0) {
             num1 = rand() % 10 + 1;
             num2 = rand() % 10 + 1;
         }
@@ -34,25 +36,59 @@ void GenerateQuestion() {
     }
 }
 
-GameState game3() 
-{
+GameState game3() {
     InitWindow(screenWidth, screenHeight, "Math Battle");
 
-    // load textures and fonts
+    // Load textures and fonts
     Texture2D background = LoadTexture("graphics/arena.png");
     Texture2D monster = LoadTexture("graphics/Boss.png");
+    Texture2D swordMark = LoadTexture("graphics/sword_mark.png");
+    Texture2D clawmark = LoadTexture("graphics/claw_mark.png");
+    Texture2D hero = LoadTexture("graphics/Hero.png");
     Font fontBm = LoadFontEx("fonts/CartoonCheck-Black.ttf", 32, 0, 250);
+    Sound hit_hero_sound = LoadSound("music/hit_human.MP3");
+    Sound hit_monster = LoadSound("music/hit_monster.MP3");
+    Music BOSS_music = LoadMusicStream("music/BOSS.mp3");
+    bool pause = false;
+    Sound mute_sound = LoadSound("music/mute.MP3");
 
     SetTargetFPS(60);
-    srand(time(0)); // initializing the random number generator
+    srand(time(0));
 
-    GenerateQuestion(); // initial task
+    GenerateQuestion(); // Initial task
 
-    char answer[10] = "\0";  // response input buffer
+    char answer[10] = "\0";
     int answerIndex = 0;
 
+    // Timer to track damage
+    float damageTimer = 0.0f;
+    bool monsterHit = false; // Track if the monster has been hit
+
+    float damageTimer1 = 0.0f;
+    bool heroHit = false;
+
     while (!WindowShouldClose()) {
-        // input verification
+        UpdateMusicStream(BOSS_music);
+
+        // Update damage timer
+        if (monsterHit) {
+            PlaySound(hit_monster);
+            damageTimer += GetFrameTime();
+            if (damageTimer >= 0.5f) { // Show the effect for 0.5 seconds
+                monsterHit = false;
+                damageTimer = 0.0f;
+            }
+        }
+        if (heroHit) {
+            PlaySound(hit_hero_sound);
+            damageTimer1 += GetFrameTime();
+            if (damageTimer1 >= 0.5f) { // Show the effect for 0.5 seconds
+                heroHit = false;
+                damageTimer1 = 0.0f;
+            }
+        }
+
+        // Input handling
         int key = GetCharPressed();
         while (key > 0) {
             if ((key >= '0' && key <= '9') && (answerIndex < 9)) {
@@ -68,15 +104,36 @@ GameState game3()
 
         if (IsKeyPressed(KEY_ENTER)) {
             if (atoi(answer) == correctAnswer) {
-                monsterHealth -= 20;  // reduces monster health
+                monsterHealth -= 20;
+                monsterHit = true;  // Trigger the hit effect
             }
             else {
-                playerHealth -= 40;  // reduces player health
+                playerHealth -= 40;
+                heroHit = true;
             }
             answerIndex = 0;
             answer[0] = '\0';
-            GenerateQuestion();  // generate a new question
+            GenerateQuestion();
         }
+
+        if (IsKeyPressed(KEY_M))
+        {
+            StopMusicStream(BOSS_music);
+            PlayMusicStream(BOSS_music);
+        }
+
+        if (IsKeyPressed(KEY_M))
+        {
+            PlaySound(mute_sound);
+            pause = !pause;
+
+            if (pause)
+                PauseMusicStream(BOSS_music);
+            else
+                ResumeMusicStream(BOSS_music);
+
+        }
+
         char operationSymbol;
         if (correctAnswer == num1 + num2) {
             operationSymbol = '+';
@@ -88,17 +145,30 @@ GameState game3()
             operationSymbol = '/';
         }
 
+        // Draw game elements
         BeginDrawing();
         ClearBackground(BLACK);
         DrawTexture(background, 0, 0, WHITE);
 
-        DrawTextureEx(monster,{ 670, 420 }, 0.0f, 0.48f, WHITE);
+        // Display the appropriate monster texture
+        if (monsterHit) {
+           
+            DrawTextureEx(swordMark, { 650, 420 }, 0.0f, 0.53f, WHITE); 
+        }
+        else {
+            DrawTextureEx(monster, { 650, 420 }, 0.0f, 0.53f, WHITE); 
+        }
+        if (heroHit) {
+            DrawTextureEx(clawmark, { 600, 600 }, 0.0f, 0.38f, WHITE);
+        }
+        else {
+            DrawTextureEx(hero, { 600, 600 }, 0.0f, 0.38f, WHITE); 
+        }
 
-        // health bars
+        // Health bars
         DrawRectangleRounded({ 80, 5, 440, 40 }, 0.3, 6, BLACK);
         DrawTextEx(fontBm, "PLAYER HEALTH", { 90, 10 }, (float)fontBm.baseSize, 10, RAYWHITE);
         DrawRectangle(120, 50, playerHealth * 3.5, 35, GREEN);
-
 
         DrawRectangleRounded({ 890, 5, 470, 40 }, 0.3, 6, BLACK);
         DrawTextEx(fontBm, "MONSTER HEALTH", { 900, 10 }, (float)fontBm.baseSize, 10, RAYWHITE);
@@ -109,14 +179,17 @@ GameState game3()
         DrawTextEx(fontBm, "Your answer:", { 170, 550 }, (float)fontBm.baseSize, 1, WHITE);
         DrawTextEx(fontBm, answer, { 265, 580 }, (float)fontBm.baseSize, 10, WHITE);
 
-
-
         EndDrawing();
     }
 
     // unload textures
+    UnloadMusicStream(BOSS_music);
+    UnloadSound(hit_hero_sound);
+    UnloadSound(hit_monster);
     UnloadTexture(background);
     UnloadTexture(monster);
+    UnloadTexture(swordMark); // unload sword mark texture
+    UnloadTexture(hero);
     CloseWindow();
 
     return NIL;
