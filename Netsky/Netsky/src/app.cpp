@@ -12,7 +12,7 @@ App::App(Vector2 setScreen, std::string setName)
 	InitWindow((int)screen.x, (int)screen.y, name.c_str());
 	SetTargetFPS(60);
 	InitAudioDevice();   
-	srand(static_cast<unsigned int>(time(0)));
+	srand(unsigned int(time(0)));
 }
 App::~App() {}
 

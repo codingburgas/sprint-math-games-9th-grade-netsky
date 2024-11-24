@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-struct MathProblem {
+struct MathProblem { // Create new data type
     int num1;
     int num2;
     char operation;
@@ -11,7 +11,7 @@ struct MathProblem {
     bool isCorrect;
 };
 
-MathProblem GenerateMathProblem() {
+MathProblem GenerateMathProblem() { 
     MathProblem problem;
     problem.num1 = rand() % 20 + 1;
     problem.num2 = rand() % 20 + 1;
@@ -36,6 +36,7 @@ MathProblem GenerateMathProblem() {
         break;
     }
 
+    // Randomly decide if displayed result is correct 
     problem.isCorrect = rand() % 2 == 0;
     if (!problem.isCorrect) {
         problem.displayedResult += (rand() % 5 + 1);
@@ -45,10 +46,10 @@ MathProblem GenerateMathProblem() {
 }
 
 GameState game1(int screenWidth, int screenHeight) {
-
-    Texture2D background = LoadTexture("graphics/backgroundgame1.png");
-
-    Texture2D greenBoard;
+    // Load textures
+    Texture2D background = LoadTexture("graphics/backgroundgame1.png"); 
+    
+    Texture2D greenBoard; 
     {
         Image greenBoardImage = LoadImage("graphics/Green_board.png");
         ImageResize(&greenBoardImage, 1200, 600);
@@ -79,16 +80,22 @@ GameState game1(int screenWidth, int screenHeight) {
     Texture2D currentTexture = normalStance;
 
     MathProblem currentProblem = GenerateMathProblem();
+
     int score = 0;
     float timer = 20.0f;
     bool gameOver = false;
+
+    // Initialize buttons
     Button trueButton{"graphics/True_button.png", {190, 660}, 0.6f };
     Button falseButton{"graphics/False_button.png", {690, 660}, 0.6f };
     Button restartButton{"graphics/Restart_button.png", {140, 660}, 0.6f };
     Button homeButton{"graphics/Home_button.png", {460, 660}, 0.6f };
     Button quitButton{"graphics/Quit_button2.png", {780, 660}, 0.6f };
+
+    // Load fonts
     Font fontBoard = LoadFontEx("fonts/chawp.ttf", 32, 0, 250);
     Font fontCartoon = LoadFontEx("fonts/CartoonCheck-Black.ttf", 64, 0, 500);
+
     Sound write_sound = LoadSound("music/chalk.MP3");
     Sound no_sound = LoadSound("music/Voicy_No.MP3");
     Sound end_sound = LoadSound("music/end.MP3");

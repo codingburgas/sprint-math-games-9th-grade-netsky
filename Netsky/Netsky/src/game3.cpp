@@ -5,8 +5,6 @@
 
 using namespace std;
 
-constexpr int screenWidth = 1440;
-constexpr int screenHeight = 800;
 
 // Player and monster health
 int playerHealth = 100;
@@ -14,7 +12,7 @@ int monsterHealth = 100;
 
 // Random number generator
 int num1, num2, correctAnswer;
-void GenerateQuestion() {
+void generateQuestion() {
     num1 = rand() % 20 + 1;
     num2 = rand() % 20 + 1;
     int operation = rand() % 3;
@@ -55,9 +53,8 @@ GameState game3() {
     Sound end_sound = LoadSound("music/end.MP3");
 
     SetTargetFPS(60);
-    srand(unsigned int(time(0)));
 
-    GenerateQuestion(); // Initial task
+    generateQuestion(); // Initial task
 
     char answer[10] = "\0";
     int answerIndex = 0;
@@ -121,7 +118,7 @@ GameState game3() {
             }
             answerIndex = 0;
             answer[0] = '\0';
-            GenerateQuestion();
+            generateQuestion();
         }
 
         if (IsKeyPressed(KEY_M))
@@ -205,7 +202,7 @@ GameState game3() {
                 answerIndex = 0;
                 answer[0] = '\0';
 
-                GenerateQuestion();
+                generateQuestion();
 
                 gameOver = false;
             }
@@ -255,7 +252,7 @@ GameState game3() {
                 answerIndex = 0;
                 answer[0] = '\0';
 
-                GenerateQuestion(); 
+                generateQuestion(); 
 
                 gameOver = false;  
             }
@@ -289,13 +286,13 @@ GameState game3() {
         EndDrawing();
     }
 
-    // unload textures
+    // Unload textures
     UnloadMusicStream(BOSS_music);
     UnloadSound(hit_hero_sound);
     UnloadSound(hit_monster);
     UnloadTexture(background);
     UnloadTexture(monster);
-    UnloadTexture(swordMark); // unload sword mark texture
+    UnloadTexture(swordMark);
     UnloadTexture(hero);
 
     return NIL;
