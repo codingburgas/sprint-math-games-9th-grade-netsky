@@ -89,6 +89,11 @@ GameState game1(int screenWidth, int screenHeight) {
     Button quitButton{"graphics/Quit_button2.png", {780, 660}, 0.6f };
     Font fontBoard = LoadFontEx("fonts/chawp.ttf", 32, 0, 250);
     Font fontCartoon = LoadFontEx("fonts/CartoonCheck-Black.ttf", 64, 0, 500);
+    Sound write_sound = LoadSound("music/chalk.MP3");
+    Sound no_sound = LoadSound("music/Voicy_No.MP3");
+    Sound end_sound = LoadSound("music/end.MP3");
+
+
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -107,9 +112,11 @@ GameState game1(int screenWidth, int screenHeight) {
                 if (currentProblem.isCorrect) {
                     score += 10;
                     currentTexture = thumbsUp;
+                    PlaySound(write_sound);
                 }
                 else {
                     currentTexture = thumbsDown;
+                    PlaySound(no_sound);
                 }
                 currentProblem = GenerateMathProblem();
             }
@@ -117,9 +124,11 @@ GameState game1(int screenWidth, int screenHeight) {
                 if (!currentProblem.isCorrect) {
                     score += 10;
                     currentTexture = thumbsUp;
+                    PlaySound(write_sound);
                 }
                 else {
                     currentTexture = thumbsDown;
+                    PlaySound(no_sound);
                 }
                 currentProblem = GenerateMathProblem();
             }
@@ -141,6 +150,8 @@ GameState game1(int screenWidth, int screenHeight) {
             trueButton.Draw();
             falseButton.Draw();
 
+            PlaySound(end_sound);
+
         }
 
         else {
@@ -156,6 +167,8 @@ GameState game1(int screenWidth, int screenHeight) {
                 currentTexture = thumbsDown;
             }
             if (restartButton.IsPressed(mousePosition, mousePressed)) {
+
+                PlaySound(end_sound);
                 score = 0;
                 timer = 30.0f;
                 gameOver = false;
@@ -170,6 +183,9 @@ GameState game1(int screenWidth, int screenHeight) {
                 UnloadTexture(thumbsUp);
                 UnloadTexture(normalStance);
                 UnloadTexture(greenBoard);
+                UnloadSound(write_sound);
+                UnloadSound(no_sound);
+                UnloadSound(end_sound);
                 return GAME_SELECT;
             }
             if (quitButton.IsPressed(mousePosition, mousePressed)) {
@@ -180,12 +196,18 @@ GameState game1(int screenWidth, int screenHeight) {
                 UnloadTexture(thumbsUp);
                 UnloadTexture(normalStance);
                 UnloadTexture(greenBoard);
+                UnloadSound(write_sound);
+                UnloadSound(no_sound);
+                UnloadSound(end_sound);
                 CloseWindow();
                 return NIL;
             }
         }
         EndDrawing();
     }
+    UnloadSound(end_sound);
+    UnloadSound(no_sound);
+    UnloadSound(write_sound);
     UnloadFont(fontBoard);
     UnloadTexture(currentTexture);
     UnloadTexture(thumbsDown);
@@ -193,6 +215,7 @@ GameState game1(int screenWidth, int screenHeight) {
     UnloadTexture(normalStance);
     UnloadTexture(greenBoard);
     UnloadTexture(background);
+
     return NIL;
 }
 

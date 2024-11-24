@@ -4,6 +4,7 @@
 GameState mainMenu()
 {
     Music music = LoadMusicStream("music/theme.mp3");
+    Sound mute_sound = LoadSound("music/mute.MP3");
 
     bool pause = false;             
 
@@ -24,16 +25,21 @@ GameState mainMenu()
 
         if(startButton.IsPressed(mousePosition, mousePressed))
         {
+          
+
+            UnloadSound(mute_sound);
             UnloadFont(fontBm);
             UnloadMusicStream(music);
             UnloadTexture(background);
-
             return GAME_SELECT;
 
         }
 
         if(exitButton.IsPressed(mousePosition, mousePressed))
         {
+            
+
+            UnloadSound(mute_sound);
             UnloadFont(fontBm);
             UnloadMusicStream(music);
             UnloadTexture(background);
@@ -49,6 +55,7 @@ GameState mainMenu()
         if(muteButton.IsPressed(mousePosition, mousePressed))
         {
             pause = !pause;
+            PlaySound(mute_sound);
 
             if (pause) 
                 PauseMusicStream(music);
@@ -68,6 +75,7 @@ GameState mainMenu()
         EndDrawing();
     }
 
+    UnloadSound(mute_sound);
     UnloadFont(fontBm);
     UnloadMusicStream(music);
     UnloadTexture(background);
