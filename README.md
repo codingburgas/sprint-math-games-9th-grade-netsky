@@ -16,7 +16,7 @@
 
 -[Ivayla Keserdzhieva](https://github.com/IRKeserdzhieva23)- Designer <br>
 
--[Velizar Vulkov](https://github.com/VTVulkov23) - Designer <br>
+-[Velizar Vulkov](https://github.com/VTVulkov23) - Co-Designer <br>
   </p>
 
   <h1>💽 Used Technologies</h1>

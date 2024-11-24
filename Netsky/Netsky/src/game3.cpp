@@ -46,6 +46,11 @@ GameState game3() {
     Texture2D clawmark = LoadTexture("graphics/claw_mark.png");
     Texture2D hero = LoadTexture("graphics/Hero.png");
     Font fontBm = LoadFontEx("fonts/CartoonCheck-Black.ttf", 32, 0, 250);
+    Sound hit_hero_sound = LoadSound("music/hit_human.MP3");
+    Sound hit_monster = LoadSound("music/hit_monster.MP3");
+    Music BOSS_music = LoadMusicStream("music/BOSS.mp3");
+    bool pause = false;
+    Sound mute_sound = LoadSound("music/mute.MP3");
 
     SetTargetFPS(60);
     srand(time(0));
@@ -63,8 +68,11 @@ GameState game3() {
     bool heroHit = false;
 
     while (!WindowShouldClose()) {
+        UpdateMusicStream(BOSS_music);
+
         // Update damage timer
         if (monsterHit) {
+            PlaySound(hit_monster);
             damageTimer += GetFrameTime();
             if (damageTimer >= 0.5f) { // Show the effect for 0.5 seconds
                 monsterHit = false;
@@ -72,6 +80,7 @@ GameState game3() {
             }
         }
         if (heroHit) {
+            PlaySound(hit_hero_sound);
             damageTimer1 += GetFrameTime();
             if (damageTimer1 >= 0.5f) { // Show the effect for 0.5 seconds
                 heroHit = false;
@@ -107,6 +116,24 @@ GameState game3() {
             GenerateQuestion();
         }
 
+        if (IsKeyPressed(KEY_M))
+        {
+            StopMusicStream(BOSS_music);
+            PlayMusicStream(BOSS_music);
+        }
+
+        if (IsKeyPressed(KEY_M))
+        {
+            PlaySound(mute_sound);
+            pause = !pause;
+
+            if (pause)
+                PauseMusicStream(BOSS_music);
+            else
+                ResumeMusicStream(BOSS_music);
+
+        }
+
         char operationSymbol;
         if (correctAnswer == num1 + num2) {
             operationSymbol = '+';
@@ -125,14 +152,14 @@ GameState game3() {
 
         // Display the appropriate monster texture
         if (monsterHit) {
+           
             DrawTextureEx(swordMark, { 650, 420 }, 0.0f, 0.53f, WHITE); 
         }
         else {
             DrawTextureEx(monster, { 650, 420 }, 0.0f, 0.53f, WHITE); 
         }
-
         if (heroHit) {
-            DrawTextureEx(clawmark, { 600, 600 }, 0.0f, 0.38f, WHITE); 
+            DrawTextureEx(clawmark, { 600, 600 }, 0.0f, 0.38f, WHITE);
         }
         else {
             DrawTextureEx(hero, { 600, 600 }, 0.0f, 0.38f, WHITE); 
@@ -156,6 +183,9 @@ GameState game3() {
     }
 
     // unload textures
+    UnloadMusicStream(BOSS_music);
+    UnloadSound(hit_hero_sound);
+    UnloadSound(hit_monster);
     UnloadTexture(background);
     UnloadTexture(monster);
     UnloadTexture(swordMark); // unload sword mark texture
