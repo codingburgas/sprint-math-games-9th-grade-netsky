@@ -96,6 +96,7 @@ GameState game1(int screenWidth, int screenHeight) {
     Font fontBoard = LoadFontEx("fonts/chawp.ttf", 32, 0, 250);
     Font fontCartoon = LoadFontEx("fonts/CartoonCheck-Black.ttf", 64, 0, 500);
 
+    // Load sound effects for interactions
     Sound write_sound = LoadSound("music/chalk.MP3");
     Sound no_sound = LoadSound("music/Voicy_No.MP3");
     Sound end_sound = LoadSound("music/end.MP3");
@@ -109,7 +110,7 @@ GameState game1(int screenWidth, int screenHeight) {
         bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
 
         if (!gameOver) {
-            timer -= GetFrameTime();
+            timer -= GetFrameTime(); // Decrease timer with elapsed time
             if (timer <= 0.0f) {
                 gameOver = true;
             }
@@ -144,6 +145,7 @@ GameState game1(int screenWidth, int screenHeight) {
 
         }
 
+        // Render game elements
         ClearBackground(RAYWHITE);
         DrawTexture(background, 0, 0, WHITE);
         DrawTexture(greenBoard, -40, 0, WHITE);
@@ -151,9 +153,11 @@ GameState game1(int screenWidth, int screenHeight) {
 
         if (!gameOver) {
 
+            // Display score and timer
             DrawTextEx(fontCartoon, ("Score: " + std::to_string(score)).c_str(), Vector2({ 1200, 30 }), 30, 5, WHITE);
             DrawTextEx(fontCartoon, ("Time: " + std::to_string((int)timer)).c_str(), Vector2({ 1200, 70 }), 30 , 5, WHITE);
 
+            // Display current math problem
             std::string problemText = std::to_string(currentProblem.num1) + " " + currentProblem.operation + " " + std::to_string(currentProblem.num2) + " = " + std::to_string(currentProblem.displayedResult);
             DrawTextEx(fontBoard, problemText.c_str(), (Vector2{ 375, 250 }), 60, 10, WHITE);
             trueButton.Draw();
@@ -164,6 +168,8 @@ GameState game1(int screenWidth, int screenHeight) {
         }
 
         else {
+
+            // Display game over screen
             DrawTextEx(fontBoard, ("Game Over! Your score: " + std::to_string(score)).c_str(), Vector2({ 165, 200 }), 50, 5, WHITE);
             restartButton.Draw();
             homeButton.Draw();
@@ -175,6 +181,8 @@ GameState game1(int screenWidth, int screenHeight) {
             else {
                 currentTexture = thumbsDown;
             }
+
+            // Check button presses for restart, home and quit
             if (restartButton.IsPressed(mousePosition, mousePressed)) {
 
                 PlaySound(end_sound);
@@ -185,6 +193,8 @@ GameState game1(int screenWidth, int screenHeight) {
                 currentTexture = normalStance;
             }
             else if (homeButton.IsPressed(mousePosition, mousePressed)) {
+
+                // Unload assets
                 UnloadFont(fontBoard);
                 UnloadTexture(background);
                 UnloadTexture(currentTexture);
@@ -198,6 +208,7 @@ GameState game1(int screenWidth, int screenHeight) {
                 return GAME_SELECT;
             }
             if (quitButton.IsPressed(mousePosition, mousePressed)) {
+                // Unload assets
                 UnloadFont(fontBoard);
                 UnloadTexture(background);
                 UnloadTexture(currentTexture);
@@ -214,6 +225,7 @@ GameState game1(int screenWidth, int screenHeight) {
         }
         EndDrawing();
     }
+    // Unload assets
     UnloadSound(end_sound);
     UnloadSound(no_sound);
     UnloadSound(write_sound);
